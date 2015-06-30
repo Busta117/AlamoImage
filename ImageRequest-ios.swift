@@ -37,7 +37,7 @@ extension Alamofire.Request {
     */
     public func responseImage(completionHandler: (NSURLRequest, NSHTTPURLResponse?, UIImage?, NSError?) -> Void) -> Self {
         return response(serializer: Request.imageResponseSerializer(), completionHandler: { (request, response, image, error) in
-            completionHandler(request, response, image as? UIImage, error)
+            completionHandler(request!, response, image as? UIImage, error)
         })
     }
 }
