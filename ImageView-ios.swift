@@ -49,6 +49,9 @@ public extension UIImageView {
 		if let cachedImage = imageCache?.objectForKey(URLStringConv.URLString) as? UIImage {
 			success(self, nil, nil, cachedImage)
 		} else {
+			if !validateURL(URLStringConv){
+				return
+			}
 			self.request = Alamofire.request(.GET, URLString: URLStringConv).validate().responseImage() {
 				(req, response, image, error) in
 				if error == nil && image != nil {
@@ -60,5 +63,15 @@ public extension UIImageView {
 			}
 		}
 	}
+	
+	private func validateURL(URLStringConv: URLStringConvertible)->Bool{
+		
+		if let _ = NSURL(string: URLStringConv.URLString) {
+			return true
+		}
+		
+		return false
+	}
+	
 }
 #endif
