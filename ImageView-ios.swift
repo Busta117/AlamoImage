@@ -8,6 +8,7 @@
 
 import Alamofire
 import Foundation
+import UIKit
 
 #if os(iOS)
 
@@ -50,6 +51,7 @@ public extension UIImageView {
 			success(self, nil, nil, cachedImage)
 		} else {
 			if !validateURL(URLStringConv){
+				self.image = UIImage()
 				return
 			}
 			self.request = Alamofire.request(.GET, URLString: URLStringConv).validate().responseImage() {
