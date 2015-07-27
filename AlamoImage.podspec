@@ -31,7 +31,7 @@ Pod::Spec.new do |s|
   s.subspec "Common" do |common|
     common.ios.source_files = 'Common.swift'
     common.osx.source_files = 'Common.swift'
-    common.dependency 'Alamofire', '~> 1.2'
+    common.dependency 'Alamofire'
   end
 
   s.subspec "Core" do |core|
