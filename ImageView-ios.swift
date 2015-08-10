@@ -55,12 +55,13 @@ import UIKit
 					return
 				}
 				self.request = Alamofire.request(.GET, URLStringConv).validate().responseImage() {
-					(req, response, image, error) in
-					if error == nil && image != nil {
-						imageCache?.setObject(image!, forKey: URLStringConv.URLString)
-						success(self, req, response, image)
-					} else {
-						failure(self, req, response, error)
+					(req, response, result) in
+					
+					if result.isSuccess{
+						imageCache?.setObject(result.value!, forKey: URLStringConv.URLString)
+						success(self, req, response, result.value)
+					}else{
+						failure(self, req, response, result.error)
 					}
 				}
 			}

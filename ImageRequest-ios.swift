@@ -23,11 +23,15 @@ import Foundation
 			
 			return GenericResponseSerializer { request, response, data in
 				guard let data = data where data.length > 0 else {
-					return (nil, nil)
+					return .Failure(nil, NSError(domain: "Bad URL", code: 400, userInfo: [NSLocalizedDescriptionKey:"Bad URL"]))
 				}
 				
-				let image = UIImage(data: data, scale: UIScreen.mainScreen().scale)
-				return (image, nil)
+				if let image = UIImage(data: data, scale: UIScreen.mainScreen().scale) {
+					return Result.Success(image)
+				}else{
+					return .Failure(nil, NSError(domain: "Bad URL", code: 400, userInfo: [NSLocalizedDescriptionKey:"Bad URL"]))
+				}
+				
 			}
 		}
 		
@@ -38,7 +42,7 @@ import Foundation
 		
 		:returns: The request.
 		*/
-		public func responseImage(completionHandler: (NSURLRequest?, NSHTTPURLResponse?, UIImage?, NSError?) -> Void)-> Self{
+		public func responseImage(completionHandler: (NSURLRequest?, NSHTTPURLResponse?, Result<UIImage>) -> Void)-> Self{
 			return response(responseSerializer: imageResponseSerializer(),completionHandler: completionHandler)
 		}
 		
