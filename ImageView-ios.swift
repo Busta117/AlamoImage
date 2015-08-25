@@ -61,7 +61,7 @@ import UIKit
 						imageCache?.setObject(result.value!, forKey: URLStringConv.URLString)
 						success(self, req, response, result.value)
 					}else{
-						failure(self, req, response, result.error)
+						failure(self, req, response, result.error as? NSError)
 					}
 				}
 			}
